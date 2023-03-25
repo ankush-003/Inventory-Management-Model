@@ -1,14 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Work on Dataset{% endblock %}
 {% block content %}
-<!-- view dataset -->
-<div class="flex justify-center gap-x-6 overflow-hidden bg-gray-50 py-2.5 px-6 sm:px-3.5">
-  <div class="flex flex-wrap items-center gap-y-2 gap-x-4">
-    <p class="text-sm text-gray-900 text-center">
-      <strong class="font-semibold">Working on {{ filename }}</strong>
-    </p>
-    <a href="/{{ file_url }}" class="flex-none rounded-full bg-gray-900 py-1 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">Download Dataset<span aria-hidden="true">&rarr;</span></a>
-  </div>
+<div class="bg-accent-dark">
+  <button class="bg-dark text-dark p-2 rounded-lg">
+    <a href="/predict/{{ filename }}">Start Prediction</a>
+  </button>
 </div>
+
 
 {% endblock %}
