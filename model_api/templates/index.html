@@ -1,2 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}Welcome to Disco{% endblock title %}
+{% block content %}
+<div class="container mx-auto">
+    <div class="flex flex-col items-center justify-center py-12">
+        <h1 class="text-4xl font-bold">Welcome to Disco</h1>
+        <p class="text-xl">Disco is a web application that allows you to upload a dataset and train a model on it. You can then use the model to make predictions on new data.</p>
+        <button class="bg-dark text-white bg-black font-medium p-2 my-6 rounded-lg">
+            <a href="/upload">Upload Dataset</a>
+        </button>
+    </div>
+</div>
+{% endblock content %}
