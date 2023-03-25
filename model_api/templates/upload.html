@@ -2,12 +2,12 @@
 {% block title %}Upload Dataset{% endblock %}
 {% block content %}
 <section class="bg-gradient-to-b pt-2" style="background-image: linear-gradient(rgb(55, 65, 81), rgb(17, 24, 39), rgb(0, 0, 0))"
-<div class="flex items-center justify-center w-full">
-    <h1 class="text-white text-center text-2xl">Upload dataset</h1>
+<div class="flex items-center justify-center w-full gap-x-4 gap-y-2">
+    <h1 class="text-white text-center text-2xl p-2 font-semibold">Upload Your Dataset</h1>
     
-    <form action="/dataset" method="POST" enctype="multipart/form-data">
-        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" accept=".csv" name="file" id="file" placeholder="Upload dataset">
-        <input type="submit" value="Upload" name="submit" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+    <form action="/dataset" method="POST" enctype="multipart/form-data" class="flex flex-col items-center justify-center gap-y-2 pb-4">
+        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mx-auto" id="file_input" type="file" accept=".csv" name="file" id="file" placeholder="Upload dataset">
+        <input type="submit" value="Upload" name="submit" class="block w-auto p-2 text-xl text-dark border border-gray-300 rounded-lg cursor-pointer bg-white">
     </form>
 </div> 
 </section>
