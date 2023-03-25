@@ -1,0 +1,19 @@
+N1 | Cost = 57390 | Bins = 519 | Time = 45.12509775161743
+N1 and N4 | Cost = 51790 | Bins = 452 | Time =15.175729990005493
+N1 and LS | Cost = 51450 | Bins = 436 | Time =50.38856077194214
+N1,N2 and LS | Cost = 51430 | Bins = 435 | Time =32.80671143531799
+
+N1 | Cost = 56910 | Bins = 517 | Time = 47.25099301338196
+N1 and N4 | Cost = 50970 | Bins = 454 | Time =39.85288858413696
+N1 and LS | Cost = 50870 | Bins = 460 | Time =16.604002952575684
+N1,N2 and LS | Cost = 50810 | Bins = 427 | Time =24.185479640960693
+
+N1 | Cost = 58170 | Bins = 530 | Time = 23.004274368286133
+N1 and N4 | Cost = 52360 | Bins = 448 | Time =42.11266231536865
+N1 and LS | Cost = 52190 | Bins = 461 | Time =31.428625106811523
+N1,N2 and LS | Cost = 52170 | Bins = 466 | Time =47.69585180282593
+
+N1 | Cost = 57690 | Bins = 520 | Time = 45.85932540893555
+N1 and N4 | Cost = 51750 | Bins = 445 | Time =24.866806268692017
+N1 and LS | Cost = 51570 | Bins = 453 | Time =17.94641947746277
+N1,N2 and LS | Cost = 51630 | Bins = 457 | Time =16.30456280708313
