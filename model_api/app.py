@@ -12,7 +12,8 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, mean_absolu
 from pandas.api.types import CategoricalDtype
 import warnings
 
-from prediction import preprocess
+# preprocessing module 
+from prediction_1 import preprocess
 
 
 warnings.filterwarnings("ignore")
@@ -67,6 +68,14 @@ def predict(filename):
     # print(MSE, MAE, MAPE)
     return render_template('output.html', file_url=file_url , filename=filename, MSE=MSE, MAE=MAE, MAPE=MAPE)
     
+@app.route('/api/predict/<filename>', methods=['GET','POST'])
+def predict_api(filename):
+    df = pd.read_csv('static\\uploads\\'+filename)
+    print(df.head())
+    MSE, MAE, MAPE = preprocess(df)
+    # print(MSE, MAE, MAPE)
+    return jsonify({'MSE': MSE, 'MAE': MAE, 'MAPE': MAPE})
+        
 
 if __name__ == '__main__':
     app.run(debug=True)
