@@ -55,13 +55,18 @@ def preprocess(df, BU, PF, PLID):
     target = ['Demand']
     df_month = df.resample('MS').mean()
     df_Q = df.resample('Q').mean()
-    train_end = datetime(2020, 12, 31)
-    test_end = datetime(2021, 12, 31)
+    # train_end = datetime(2020, 12, 31)
+    # test_end = datetime(2021, 12, 31)
+    split_point = int(len(df_month) * 0.8)
+    train_end = df_month.index[split_point]
+    test_end = df_month.index[-1]
 
-    # df_train = df_Q[:train_end]
-    # df_test = df_Q[train_end:test_end]
     df_train = df_month[:train_end]
     df_test = df_month[train_end:test_end]
+    # df_train = df_Q[:train_end]
+    # df_test = df_Q[train_end:test_end]
+    # df_train = df_month[:train_end]
+    # df_test = df_month[train_end:test_end]
     df_train.drop(['day_of_the_week', 'Quarter','Month','Year','Week'], axis=1, inplace=True)
     df_test.drop(['day_of_the_week', 'Quarter','Month','Year','Week'], axis=1, inplace=True)
     df_train = df_train.reset_index()
@@ -69,10 +74,16 @@ def preprocess(df, BU, PF, PLID):
     
     df_train.columns = ['ds','y']
     df_test.columns = ['ds','y']
-    print("range is :")
-    print(min(df_train['y'].min(), df_test['y'].min()) - max(df_train['y'].max(), df_test['y'].max()))
+    # print("range is :")
+    # print(min(df_train['y'].min(), df_test['y'].min()) - max(df_train['y'].max(), df_test['y'].max()))
     
-    m = Prophet()
+    # m = Prophet(changepoint_prior_scale=0.3,
+    #             n_changepoints=100,
+    #             seasonality_mode='multiplicative',
+    #             yearly_seasonality = True)
+    print("train data")
+    m = Prophet(
+        seasonality_mode='multiplicative')
     m.fit(df_train)
     pred = m.predict(df_test)
     df_pred = pred[['ds', 'yhat']]
@@ -87,6 +98,7 @@ def preprocess(df, BU, PF, PLID):
     yhat = [ i for i in df_pred['yhat']]
     fds = [ i.strftime('%Y-%m-%d') for i in forecast['ds']]
     fyhat = [ i for i in forecast['yhat']]
+    print("Training Successful!")
     return [MSE, MAE, MAPE, RMSE, ds, y, yhat, fds, fyhat]
 
 
