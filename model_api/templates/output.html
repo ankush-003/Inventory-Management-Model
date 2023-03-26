@@ -39,17 +39,23 @@
 </div>
 </div>
 </div>
-<div class="w-100 h-80 flex justify-center">
-    <canvas id="myChart" width="128px" height="128px"></canvas>
-</div>
-
+    <div class="w-100 h-80 flex flex-col justify-center">
+        <canvas id="prediction" width="128px" height="128px"></canvas>
+    </div>
+    <div class="flex justify-center my-6">
+        <button class="bg-black text-white font-bold py-2 px-4 rounded-full" id="future">
+            Forecast future
+        </button>
+    </div>
 <script>
     console.log()
     console.log(JSON.parse(JSON.stringify({{ ds | safe}})));
     console.log(JSON.parse(JSON.stringify({{ y | safe}})));
     console.log(JSON.parse(JSON.stringify({{ yhat | safe}})));
+    console.log(JSON.parse(JSON.stringify({{ fds | safe}})));
+    console.log(JSON.parse(JSON.stringify({{ fyhat | safe}})));
     
-    var ctx = document.getElementById('myChart').getContext('2d');
+    var ctx = document.getElementById('prediction').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -87,5 +93,37 @@
             }
         }
     });
+
+    document.getElementById('future').addEventListener('click',function(e){
+        myChart.destroy();
+        var ctx2 = document.getElementById('prediction').getContext('2d');
+        var myChart2 = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: JSON.parse(JSON.stringify({{ fds | safe}})),
+                datasets: [{
+                    label: 'Forecasted',
+                    data: JSON.parse(JSON.stringify({{ fyhat | safe}})),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        e.target.remove();
+    })
 </script>
 {% endblock %}

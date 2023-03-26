@@ -16,6 +16,7 @@ import json
 # preprocessing module 
 from prediction_1 import preprocess as preprocess_1
 from prediction_2 import preprocess as preprocess_2
+from prediction_2 import select_BU, select_PF, select_PLID 
 
 
 warnings.filterwarnings("ignore")
@@ -66,20 +67,40 @@ def dataset():
 @app.route('/predict/<filename>', methods=['GET','POST'])
 def predict(filename):
     df = pd.read_csv('static\\uploads\\'+filename)
-    print(df.head())
-    if(filename == "Product_Demand.csv"):
-        MSE, MAE, MAPE, RMSE, ds, y, yhat = preprocess_1(df)
-    else:
-        MSE, MAE, MAPE, RMSE, ds, y, yhat = preprocess_2(df, 'UOPBLRBU', 'C9300', 'C9300-24P')
-    # print(MSE, MAE, MAPE)
-    # print(ds)
-    # print(y)
-    # print(yhat)
-    # ds = (json.dumps(ds))
-    # ds =(json.dumps(y))
-    # print(json.dumps(yhat))
-    # print(data)
-    return render_template('output.html', file_url=file_url , filename=filename, MSE=MSE, MAE=MAE, MAPE=MAPE, RMSE=RMSE, ds=ds, y=y, yhat=yhat)
+    BU = select_BU(df)
+    return render_template('bunit.html', file_url=file_url , filename=filename, BU=BU)
+    # print(df.head())
+    # if(filename == "Product_Demand.csv"):
+    #     MSE, MAE, MAPE, RMSE, ds, y, yhat = preprocess_1(df)
+    # else:
+    #     MSE, MAE, MAPE, RMSE, ds, y, yhat, fds, fyhat = preprocess_2(df, 'UOPBLRBU', 'C9300', 'C9300-24P')
+    # # print(MSE, MAE, MAPE)
+    # # print(ds)
+    # # print(y)
+    # # print(yhat)
+    # # ds = (json.dumps(ds))
+    # # ds =(json.dumps(y))
+    # # print(json.dumps(yhat))
+    # # print(data)
+    # return render_template('output.html', file_url=file_url , filename=filename, MSE=MSE, MAE=MAE, MAPE=MAPE, RMSE=RMSE, ds=ds, y=y, yhat=yhat, fds=fds, fyhat=fyhat)
+    
+@app.route('/predict/<filename>/<BU>', methods=['GET','POST'])
+def predict_BU(filename, BU):
+    df = pd.read_csv('static\\uploads\\'+filename)
+    PF = select_PF(df, BU)
+    return render_template('pfamily.html', file_url=file_url , filename=filename, BU=BU, PF=PF)
+
+@app.route('/predict/<filename>/<BU>/<PF>', methods=['GET','POST'])
+def predict_PF(filename, BU, PF):
+    df = pd.read_csv('static\\uploads\\'+filename)
+    PLID = select_PLID(df, BU, PF)
+    return render_template('product.html', file_url=file_url , filename=filename, BU=BU, PF=PF, PLID=PLID)
+
+@app.route('/predict/<filename>/<BU>/<PF>/<PLID>', methods=['GET','POST'])
+def train(filename, BU, PF, PLID):
+    df = pd.read_csv('static\\uploads\\'+filename)
+    MSE, MAE, MAPE, RMSE, ds, y, yhat, fds, fyhat = preprocess_2(df, BU, PF, PLID)
+    return render_template('output.html', file_url=file_url , filename=filename, MSE=MSE, MAE=MAE, MAPE=MAPE, RMSE=RMSE, ds=ds, y=y, yhat=yhat, fds=fds, fyhat=fyhat)
     
 @app.route('/api/predict/<filename>', methods=['GET','POST'])
 def predict_api(filename):

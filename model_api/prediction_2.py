@@ -16,6 +16,24 @@ def create_feature(dataframe):
     dataframe['Week'] = dataframe.index.isocalendar().week.astype(int)
     return dataframe
 
+def select_BU(df):
+    df.columns = ['BU','PF','PLID','FQ','FM','Order_Demand','Date']
+    df = df.drop(['FQ', 'FM'], axis=1)
+    return df.BU.unique()
+    
+def select_PF(df, BU):
+    df.columns = ['BU','PF','PLID','FQ','FM','Order_Demand','Date']
+    df = df.drop(['FQ', 'FM'], axis=1)
+    df = df[df['BU'] == BU]
+    return df.PF.unique()
+
+def select_PLID(df, BU, PF):
+    df.columns = ['BU','PF','PLID','FQ','FM','Order_Demand','Date']
+    df = df.drop(['FQ', 'FM'], axis=1)
+    df = df[df['BU'] == BU]
+    df = df[df['PF'] == PF]
+    return df.PLID.unique()    
+
 def preprocess(df, BU, PF, PLID):
     df.columns = ['BU','PF','PLID','FQ','FM','Order_Demand','Date']
     df = df.drop(['FQ', 'FM'], axis=1)
@@ -58,7 +76,8 @@ def preprocess(df, BU, PF, PLID):
     m.fit(df_train)
     pred = m.predict(df_test)
     df_pred = pred[['ds', 'yhat']]
-    
+    future = m.make_future_dataframe(periods= 4*3, freq='M',include_history=False)
+    forecast = m.predict(future)
     MSE = mean_squared_error(df_test['y'], df_pred['yhat'])
     RMSE = np.sqrt(MSE)
     MAE = mean_absolute_error(df_test['y'], df_pred['yhat'])
@@ -66,6 +85,8 @@ def preprocess(df, BU, PF, PLID):
     ds = [ i.strftime('%Y-%m-%d') for i in df_test['ds']]
     y = [ i for i in df_test['y']]
     yhat = [ i for i in df_pred['yhat']]
-    return [MSE, MAE, RMSE, MAPE, ds, y, yhat]
+    fds = [ i.strftime('%Y-%m-%d') for i in forecast['ds']]
+    fyhat = [ i for i in forecast['yhat']]
+    return [MSE, MAE, MAPE, RMSE, ds, y, yhat, fds, fyhat]
 
 

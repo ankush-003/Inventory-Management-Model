@@ -1,0 +1,14 @@
+{% extends 'dataset.html' %}
+{% block title %}Business Unit{% endblock title %}
+{% block selection %}
+    <h2 class="text-black text-center text-2xl font-bold p-3">
+        Select Business Unit
+    </h2>
+    <div class="flex flex-wrap mx-3 my-6 gap-x-3 gap-y-2">
+        {% for bu in BU %}
+            <button class="text-white bg-black rounded p-2">
+                <a href="/predict/{{ filename }}/{{ bu }}">{{ bu }}</a>
+            </button>
+        {% endfor %}
+    </div>
+{% endblock selection %}
