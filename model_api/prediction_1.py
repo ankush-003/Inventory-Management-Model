@@ -6,6 +6,7 @@ import numpy as np
 from sklearn.metrics import mean_squared_error, mean_absolute_error, mean_absolute_percentage_error
 import warnings
 from pandas.api.types import CategoricalDtype
+import json
 
 warnings.filterwarnings("ignore")
 plt.style.use('ggplot')
@@ -85,11 +86,15 @@ def train_model(train, test):
     MAE = mean_absolute_error(test['y'], pred['yhat'])
     MSE = mean_squared_error(test['y'], pred['yhat'])
     RMSE = np.sqrt(mean_squared_error(test['y'], pred['yhat']))
+    MAPE = mean_absolute_percentage_error(test['y'], pred['yhat'])
     print('MAE: {}'.format(MAE))
     print('MSE: {}'.format(MSE))
     print('RMSE: {}'.format(RMSE))
-    print('Mean Absolute Percentage Error: {}'.format(mean_absolute_percentage_error(y_true=test['y'], y_pred=pred['yhat'])))
+    print('Mean Absolute Percentage Error: {}'.format(MAPE))
     print(pred.tail())
-    return [MAE, MSE, RMSE]
+    ds = [ i.strftime('%Y-%m-%d') for i in test['ds']]
+    y = [ i for i in test['y']]
+    yhat = [ i for i in pred['yhat']]
+    return [MAE, MSE, RMSE, MAPE, ds, y, yhat]
         
     
