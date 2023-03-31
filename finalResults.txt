@@ -17,3 +17,10 @@ N1 | Cost = 57690 | Bins = 520 | Time = 45.85932540893555
 N1 and N4 | Cost = 51750 | Bins = 445 | Time =24.866806268692017
 N1 and LS | Cost = 51570 | Bins = 453 | Time =17.94641947746277
 N1,N2 and LS | Cost = 51630 | Bins = 457 | Time =16.30456280708313
+
+n = 100 :
+
+N1 | Cost = 5280 | Bins = 47 | Time = 9.468654155731201
+N1 and N4 | Cost = 5080 | Bins = 41 | Time =1.377272367477417
+N1 and LS | Cost = 5060 | Bins = 42 | Time =5.526546001434326
+N1,N2 and LS | Cost = 5050 | Bins = 38 | Time =8.642953634262085
